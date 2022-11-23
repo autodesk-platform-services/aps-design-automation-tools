@@ -16,7 +16,7 @@ This utility app enables you to see and create new app bundles, activities and w
 
 ### Live version
 
-[https://da-manager.herokuapp.com](https://da-manager.herokuapp.com)
+[https://da-manager.autodesk.io/](https://da-manager.autodesk.io/)
 
 # Usage
 
