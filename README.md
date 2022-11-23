@@ -1,4 +1,4 @@
-# Design Automation Manager
+# Design Automation Tools
 
 [![Node.js](https://img.shields.io/badge/Node.js-10.16.2-blue.svg)](https://nodejs.org/)
 [![npm](https://img.shields.io/badge/npm-6.9.0-blue.svg)](https://www.npmjs.com/)
