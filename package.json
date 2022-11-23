@@ -5,11 +5,11 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
-    "ejs": "^2.7.4",
+    "ejs": "^3.1.8",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "express-sslify": "^1.2.0",
-    "forge-apis": "^0.4.8",
+    "forge-apis": "^0.9.4",
     "formidable": "^1.2.2",
     "morgan": "^1.10.0",
     "oauth": "^0.9.14",
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/developer-autodesk/model.derivative-nodejs-sample"
+    "url": "git://github.com/autodesk-platform-services/aps-design-automation-tools"
   },
   "scripts": {
     "start": "NODE_ENV=production node start.js",
     "dev": "node start.js",
     "nodemon": "nodemon start.js --ignore www/"
   },
-  "author": "Forge Partner Development",
+  "author": "Autodesk Partner Development",
   "license": "MIT"
 }

@@ -159,18 +159,18 @@ $(document).ready(function () {
                     // We're finished
                     console.log("uploadChunks >> done");
                     showProgress("File uploaded", "success");
-                    $("#forgeUploadHidden").val('');
+                    $("#apsUploadHidden").val('');
                     $('#appBundlesTree').jstree(true).refresh()
                 }
             }).fail(function (error) {
                 console.log("uploadChunks >> fail");
                 showProgress("Upload failed", "failed");
-                $("#forgeUploadHidden").val('');
+                $("#apsUploadHidden").val('');
             })
         };
     }
 
-    $("#forgeUploadHidden").change(function (evt) {
+    $("#apsUploadHidden").change(function (evt) {
 
         showProgress("Uploading file... ", "inprogress");
 
@@ -209,7 +209,7 @@ $(document).ready(function () {
 
     var upload = $("#uploadFile").click(function (evt) {
         evt.preventDefault();
-        $("#forgeUploadHidden").trigger("click");
+        $("#apsUploadHidden").trigger("click");
     });
 
     var auth = $("#authenticate")
@@ -676,7 +676,7 @@ function createItem(type) {
             },
             'receiver': {
               'text': 'Receiver',
-              'placeholder': 'Client ID of Forge app to share it with',
+              'placeholder': 'Client ID of aps app to share it with',
               'value': ''
             }
         };

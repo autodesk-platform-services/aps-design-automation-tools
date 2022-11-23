@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////
 // Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Written by Autodesk Partner Development
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -31,7 +31,7 @@ app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(cookieParser());
 app.set('trust proxy', 1) // trust first proxy - HTTPS on Heroku 
 app.use(session({
-    secret: 'autodeskforge',
+    secret: 'autodeskplatformservices',
     cookie: {
         httpOnly: true,
         secure: (process.env.NODE_ENV === 'production'),

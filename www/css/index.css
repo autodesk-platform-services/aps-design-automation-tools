@@ -17,15 +17,15 @@
 
 
 
-.forgeTreeContainer {
+.apsTreeContainer {
     overflow: hidden; padding:0;  border:1px solid silver; height:500px;
 }
-.forgeControlContainer {
+.apsControlContainer {
     padding: 10px;
     width: 100%; position: absolute;
     display: inline-block; overflow: auto;
 }
-.forgeControl {
+.apsControl {
     width: 100%; position: absolute;
     display: inline-block; overflow: auto;
 }
@@ -35,18 +35,18 @@
 }
 
 
-#forgeHierarchy {
+#apsHierarchy {
     height: 250px; top: 0;
 }
-#forgeFileOptions {
+#apsFileOptions {
     height: 55px;   top: 245px;
     border-top-width: 1px; border-top-color: silver; border-top-style: solid;
 }
-#forgeProperties {
+#apsProperties {
     height: 195px;  bottom: 0;
     border-top-width: 1px; border-top-color: silver; border-top-style: solid;
 }
-#forgeCreateBucket {
+#apsCreateBucket {
     height: 135px;   bottom: 0px;
     border-top-width: 1px; border-top-color: silver; border-top-style: solid;
     overflow: hidden;
@@ -76,10 +76,10 @@
 .tab-pane {
     margin: 15px; 
 }
-#forgeFormats {
+#apsFormats {
     vertical-align: middle;
 }
-#forgeUploadHidden {
+#apsUploadHidden {
     visibility: hidden;
 }
 
