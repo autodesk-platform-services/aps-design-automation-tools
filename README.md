@@ -12,7 +12,7 @@ This utility app enables you to see and create new app bundles, activities and w
 
 ### Thumbnail
 
-![thumbnail](/readme/AppBundles.png)
+![thumbnail](/thumbnail.png)
 
 ### Live version
 
