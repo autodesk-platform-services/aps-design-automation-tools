@@ -31,13 +31,13 @@ You'll find three buttons on the bottom left:
 
 3. Whenever you use the **Create** button a dialog box will pop up that enables you to provide the necessary info in order to create the specific item:
 
-![thumbnail](/readme/CreateAppBundle.png)
+![create appbundle](/readme/CreateAppBundle.png)
 
 4. In the **Info** dialog box, some of the input fields will have a drop down menu with various functions:
 - they might enable you to populate the control with some text - often these are just templates that need to be filled in with the relevant information
 - verify if the input is a valid json:
 
-![thumbnail](/readme/VerifyJson.png)
+![verify JSON](/readme/VerifyJson.png)
 
 4. When an **Activity Alias** is selected in the tree, the plus button will turn into a **play/run** button showing that you could start a **Workitem** based on the selected **Activity**
 
@@ -46,7 +46,7 @@ There will be two buttons available:
 - **Stop**: it will try to stop the selected **Workitem**
 - **Delete**: it will remove the selected item from the list (it won't try to stop it)
 
-![thumbnail](/readme/Workitems.png)
+![workitems](/readme/Workitems.png)
 
 If you click any of the items then an update will be requested from the server and the reply will be shown in the info box
 
