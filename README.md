@@ -5,7 +5,7 @@
 ![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20osx%20%7C%20linux-lightgray.svg)
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
-[![OAuth2](https://img.shields.io/badge/OAuth2-v1-green.svg)](https://aps.autodesk.com/)
+[![OAuth2](https://img.shields.io/badge/OAuth2-v2-green.svg)](https://aps.autodesk.com/)
 [![Design Automation](https://img.shields.io/badge/Design%20Automation-v3-green.svg)](https://aps.autodesk.com/)
 
 This utility app enables you to see and create new app bundles, activities and workitems - including  creating new version of those and aliases for them
