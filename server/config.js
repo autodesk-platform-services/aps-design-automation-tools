@@ -26,5 +26,6 @@ module.exports = {
     ],
     
     // Required scope of the token sent to the client
-    scopePublic: ['viewables:read']
+    scopePublic: ['viewables:read'],
+    sessionSecret: process.env.SERVER_SESSION_SECRET || 'autodesksecret',
 };

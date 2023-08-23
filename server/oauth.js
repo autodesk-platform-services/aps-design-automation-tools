@@ -18,9 +18,6 @@
 
 'use strict'; // http://www.w3schools.com/js/js_strict.asp
 
-// token handling in session
-var token = require('./token');
-
 // web framework
 var express = require('express');
 var router = express.Router();
@@ -40,13 +37,12 @@ router.get('/user/logoff', function(req, res) {
 });
 
 async function getToken(session, client_id, client_secret) {
-    var tokenSession = new token(session);
-
     var client = new apsSDK.AuthClientTwoLegged(client_id, client_secret, config.scopeInternal);
     var credentials = await client.authenticate();
 
-    tokenSession.setCredentials(credentials);
-    tokenSession.setOAuth(client);
+    session.client_id = client_id;
+    session.client_secret = client_secret;
+    session.access_token = credentials.access_token;
 
     console.log('Token: ' + credentials.access_token);
 

@@ -1,27 +1,18 @@
 'use strict'; // http://www.w3schools.com/js/js_strict.asp
 
-// token handling in session
-var token = require('./token');
-
 // web framework
 var express = require('express');
 var router = express.Router();
 
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var rawParser = bodyParser.raw({ limit: '10mb' });
 const request = require('request');
 const requestPromise = require('request-promise');
-
-var config = require('./config');
 
 async function daRequest(req, path, method, headers, body) {
     headers = headers || {};
     if (!headers['Authorization']) {
-        var tokenSession = new token(req.session);
-        var credentials = tokenSession.getCredentials();
-
-        headers['Authorization'] = 'Bearer ' + credentials.access_token;
+        headers['Authorization'] = 'Bearer ' + req.session.access_token;
         headers['content-type'] = 'application/json';
     }
 
@@ -449,9 +440,13 @@ router.get('/report/:url', async function(req, res) {
         method: 'GET'
     }
 
-    var result = await requestPromise(downloadOptions);
+    try {
+      var result = await requestPromise(downloadOptions);
 
-    res.end(result);
+      res.end(result);
+    } catch (ex) {
+      res.status(500).end(ex.message);
+    }
 });
 
 /////////////////////////////////////////////////////////////////

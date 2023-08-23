@@ -19,26 +19,16 @@
 
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
-//var enforce = require('express-sslify');
+var session = require('cookie-session');
+var config = require('./config');
 var app = express();
-
-// Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
-// a load balancer (e.g. Heroku). See further comments below
-//app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // this session will be used to save the oAuth token
 app.use(cookieParser());
 app.set('trust proxy', 1) // trust first proxy - HTTPS on Heroku 
 app.use(session({
-    secret: 'autodeskplatformservices',
-    cookie: {
-        httpOnly: true,
-        secure: (process.env.NODE_ENV === 'production'),
-        maxAge: 1000 * 60 * 60 // 1 hours to expire the session and avoid memory leak
-    },
-    resave: false,
-    saveUninitialized: true
+    secret: config.sessionSecret,
+    maxAge: 1000 * 60 * 60, // 1 hours to expire the session and avoid memory leak
 }));
 
 // prepare server routing
