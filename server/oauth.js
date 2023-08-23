@@ -37,7 +37,7 @@ router.get('/user/logoff', function(req, res) {
 });
 
 async function getToken(session, client_id, client_secret) {
-    var client = new apsSDK.AuthClientTwoLegged(client_id, client_secret, config.scopeInternal);
+    var client = new apsSDK.AuthClientTwoLeggedV2(client_id, client_secret, config.scopeInternal);
     var credentials = await client.authenticate();
 
     session.client_id = client_id;
