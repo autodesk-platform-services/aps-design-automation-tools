@@ -35,6 +35,7 @@ async function daRequest(req, path, method, headers, body) {
           response = await requestPromise(options);
         } catch (ex) {
           console.log(ex.message);
+          throw ex;
         }
     
         if (response && response.paginationToken) {
