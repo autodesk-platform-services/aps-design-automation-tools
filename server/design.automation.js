@@ -72,7 +72,7 @@ async function getItems(req, type, isPersonal) {
     let items = [];
 
     response.data.forEach((item, index) => {
-        if (!item.startsWith(nickname) ^ isPersonal) {
+        if (!item.startsWith(nickname.nickname) ^ isPersonal) {
             // Show only personal items
             let nameParts = getNameParts(item);
             if (!includesItem(items, nameParts[1])) {
