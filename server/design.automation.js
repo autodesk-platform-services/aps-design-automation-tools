@@ -69,10 +69,12 @@ function getFullName(nickName, name, alias) {
 async function getItems(req, type, isPersonal) {
     let response = await daRequest(req, type, 'GET');
     let nickname = await daRequest(req, 'forgeapps/me', 'GET');
+    // The response body structure depends on  whether we set a nickname or not
+    nickname = nickname.nickname ? nickname.nickname : nickname;
     let items = [];
 
     response.data.forEach((item, index) => {
-        if (!item.startsWith(nickname.nickname) ^ isPersonal) {
+        if (!item.startsWith(nickname) ^ isPersonal) {
             // Show only personal items
             let nameParts = getNameParts(item);
             if (!includesItem(items, nameParts[1])) {
