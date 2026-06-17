@@ -438,6 +438,11 @@ router.get('/report/:url', async function(req, res) {
     console.log('GET /report');
     var inputUrl = req.params.url;
 
+    if (!req.session || !req.session.access_token) {
+        res.status(401).end('Unauthorized');
+        return;
+    }
+
     var downloadOptions = {
         uri: inputUrl,
         method: 'GET'
