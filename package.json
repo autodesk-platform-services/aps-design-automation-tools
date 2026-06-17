@@ -12,9 +12,10 @@
     "formidable": "^1.2.2",
     "morgan": "^1.10.0",
     "oauth": "^0.9.14",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6",
     "trim": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "repository": {
     "type": "git",

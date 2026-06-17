@@ -6,8 +6,30 @@ var router = express.Router();
 
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-const request = require('request');
-const requestPromise = require('request-promise');
+
+// Perform an HTTP request with the global fetch API. Parses a JSON body when
+// possible and, on a non-2xx response, throws an Error carrying `.statusCode`
+// and the response body as its message (mirroring the behaviour the callers
+// previously relied on from request-promise).
+async function httpRequest(url, init) {
+    const response = await fetch(url, init);
+
+    const text = await response.text();
+    let parsed = text;
+    if (text) {
+        try { parsed = JSON.parse(text); } catch (e) { /* keep raw text */ }
+    }
+
+    if (!response.ok) {
+        const message = typeof parsed === 'string' ? parsed : JSON.stringify(parsed);
+        const err = new Error(message || `HTTP ${response.status}`);
+        err.statusCode = response.status;
+        err.error = parsed;
+        throw err;
+    }
+
+    return parsed;
+}
 
 async function daRequest(req, path, method, headers, body) {
     headers = headers || {};
@@ -16,30 +38,33 @@ async function daRequest(req, path, method, headers, body) {
         headers['content-type'] = 'application/json';
     }
 
-    let url = 'https://developer.api.autodesk.com/da/us-east/v3/' + path;
-    let options = {
-        uri: url,
+    let baseUrl = 'https://developer.api.autodesk.com/da/us-east/v3/' + path;
+    let url = baseUrl;
+
+    let init = {
         method: method,
-        headers: headers,
-        json: true
+        headers: headers
     };
 
     if (body) {
-        options.body = body;
+        init.body = JSON.stringify(body);
+        if (!headers['content-type'] && !headers['Content-Type']) {
+            headers['content-type'] = 'application/json';
+        }
     }
-    
+
     let data = [];
     while (true) {
         let response;
         try {
-          response = await requestPromise(options);
+          response = await httpRequest(url, init);
         } catch (ex) {
           console.log(ex.message);
           throw ex;
         }
-    
+
         if (response && response.paginationToken) {
-            options.uri = url + "?page=" + response.paginationToken;
+            url = baseUrl + "?page=" + response.paginationToken;
             data = [...data, ...response.data];
         } else {
             if (data.length > 0) {
@@ -48,7 +73,7 @@ async function daRequest(req, path, method, headers, body) {
 
             return response;
         }
-    } 
+    }
 }
 
 /////////////////////////////////////////////////////////////////
@@ -98,23 +123,34 @@ async function getItem(req, type, id) {
 }
 
 async function uploadFile(inputUrl, uploadParameters) {
-    var downloadOptions = {
-        uri: inputUrl,
-        method: 'GET'
+    // Download the bundle from its (OSS) URL
+    const downloadResponse = await fetch(inputUrl);
+    if (!downloadResponse.ok) {
+        const err = new Error(`Failed to download bundle (HTTP ${downloadResponse.status})`);
+        err.statusCode = downloadResponse.status;
+        throw err;
     }
+    const fileBlob = await downloadResponse.blob();
 
-    var uploadOptions = {
-        uri: uploadParameters.endpointURL,
+    // Re-upload it to the signed S3 form-data endpoint. The form fields must
+    // come before the file part, and the Content-Type (with multipart
+    // boundary) is set automatically by fetch when the body is a FormData.
+    const form = new FormData();
+    for (const [key, value] of Object.entries(uploadParameters.formData)) {
+        form.append(key, value);
+    }
+    form.append('file', fileBlob);
+
+    const uploadResponse = await fetch(uploadParameters.endpointURL, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            'Cache-Control': 'no-cache'
-        },
-        formData: uploadParameters.formData
+        headers: { 'Cache-Control': 'no-cache' },
+        body: form
+    });
+    if (!uploadResponse.ok) {
+        const err = new Error(`Failed to upload bundle (HTTP ${uploadResponse.status})`);
+        err.statusCode = uploadResponse.status;
+        throw err;
     }
-    uploadOptions.formData.file = request(downloadOptions);
-
-    await requestPromise(uploadOptions);
 }
 
 async function createItem(req, type, body) {
@@ -443,13 +479,12 @@ router.get('/report/:url', async function(req, res) {
         return;
     }
 
-    var downloadOptions = {
-        uri: inputUrl,
-        method: 'GET'
-    }
-
     try {
-      var result = await requestPromise(downloadOptions);
+      var response = await fetch(inputUrl);
+      if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+      }
+      var result = await response.text();
 
       res.end(result);
     } catch (ex) {
