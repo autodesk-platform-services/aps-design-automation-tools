@@ -479,6 +479,11 @@ router.get('/report/:url', async function(req, res) {
         return;
     }
 
+    if (!inputUrl.startsWith('https://dasprod-store.s3.us-east-1.amazonaws.com/workItem')) {
+        res.status(400).end('Invalid URL');
+        return;
+    }
+
     try {
       var response = await fetch(inputUrl);
       if (!response.ok) {
