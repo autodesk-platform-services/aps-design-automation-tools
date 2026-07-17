@@ -18,7 +18,7 @@ This utility app enables you to see and create new app bundles, activities and w
 
 [https://da-manager.autodesk.io/](https://da-manager.autodesk.io/)
 
-### Desktop Alternative
+### Desktop alternative
 
 A great alternative that runs directly on the desktop is our **VS Code Extension** which provides similar capabilities: 
 https://marketplace.visualstudio.com/items?itemName=petrbroz.vscode-forge-tools
