@@ -313,8 +313,8 @@ router.get('/:type/treeNode', async function(req, res) {
             res.json(makeTree(versionAliases, 'alias', `${id}/`));
         }
     } catch (ex) {
-        res.statusMessage = JSON.stringify(ex);
-        res.status(ex.statusCode ? ex.statusCode : 500).end();
+        // Send details in the body: reason phrases are dropped over HTTP/2 (e.g. behind nginx on dokku)
+        res.status(ex.statusCode ? ex.statusCode : 500).json(ex instanceof Error ? { message: ex.message } : ex);
     }
 });
 

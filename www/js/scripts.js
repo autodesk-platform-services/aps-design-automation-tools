@@ -730,6 +730,9 @@ function prepareItemsTree(type) {
                     return {
                         "id": node.id
                     };
+                },
+                "error": function (xhr) {
+                    console.error(`Loading ${type} tree failed (${xhr.status}):`, xhr.responseJSON || xhr.responseText);
                 }
             }
         },
