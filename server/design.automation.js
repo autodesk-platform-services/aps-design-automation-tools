@@ -313,7 +313,8 @@ router.get('/:type/treeNode', async function(req, res) {
             res.json(makeTree(versionAliases, 'alias', `${id}/`));
         }
     } catch (ex) {
-        res.status(ex.statusCode ? ex.statusCode : 500).json({ message: (ex.message ? ex.message : ex) });
+        res.statusMessage = JSON.stringify(ex);
+        res.status(ex.statusCode ? ex.statusCode : 500).end();
     }
 });
 
